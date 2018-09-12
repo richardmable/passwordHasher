@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 )
 
 func passwordCLineEntry() []byte {
@@ -10,8 +9,6 @@ func passwordCLineEntry() []byte {
 	var pwd string
 	// storing input
 	_, err := fmt.Scan(&pwd)
-	if err != nil {
-		log.Println(err)
-	}
+	checkError(err)
 	return []byte(pwd)
 }

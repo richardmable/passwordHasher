@@ -64,7 +64,12 @@ func main() {
 		go gracefulShutdown(svr, idleConnsClosed, sigStop)
 		// handle the shutdown request by sending a signal ok to shutdown
 		http.HandleFunc("/shutdown", func(w http.ResponseWriter, r *http.Request) {
-			sigStop <- true
+			if r.Method != "GET" {
+				http.Error(w, "method not allowed.", 405)
+			} else {
+				sigStop <- true
+			}
+
 		})
 		// block program exit until until all idle connections are closed
 		<-idleConnsClosed

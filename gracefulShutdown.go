@@ -10,9 +10,9 @@ func gracefulShutdown(srv *http.Server, idleConnsClosed chan struct{}, sigStop c
 	// block until we receive the shutdown signal
 	<-sigStop
 	fmt.Println("Starting shutdown...finishing open processes")
-	// We received an interrupt signal, shut down.
+	// received an interrupt signal, shut down
 	if err := srv.Shutdown(context.Background()); err != nil {
-		// Error from closing listeners, or context timeout:
+		// error from closing listeners, or context timeout
 		fmt.Printf("HTTP server Shutdown: %v", err)
 	}
 	close(idleConnsClosed)

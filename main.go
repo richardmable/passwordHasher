@@ -10,7 +10,7 @@ import (
 func main() {
 	fmt.Println("Program started...")
 	var programOption int64
-	fmt.Println("Select a program option by entering a number:\n 1: Command line input to return SHA512 Base64 encoded hash\n 2: Hash and encode passwords over HTTP\n 3: Same as 2, but with the ability to send a GET request to /shutdown to shutdown the server once work is completed")
+	fmt.Println("Select a program option by entering a number:\n 1: Command line input to return SHA512 Base64 encoded hash\n 2: Hash and encode passwords over HTTP\n 3: Same as 2, but with the ability to send a GET request to /shutdown to shutdown the server once work is completed, and a /stats endpoint")
 	_, err := fmt.Scan(&programOption)
 	checkError(err)
 	// command line mode to take a user inputted string and return a base64 SHA512 encoded string
@@ -38,8 +38,8 @@ func main() {
 		log.Fatal(s.ListenAndServe())
 
 	} else if programOption == 3 {
-		// does the same as program 2 but provides a /shutdown endpoint to shutdown gracefully
-		fmt.Println("Program 3, http mode started w/shutdown")
+		// does the same as program 2 but provides a /shutdown endpoint to shutdown gracefully, and provides a /stats endpoint
+		fmt.Println("Program 3, http mode started w/shutdown and stats enabled")
 		// set some timeouts
 		svr := &http.Server{
 			Addr:           ":8080",
@@ -50,6 +50,7 @@ func main() {
 		}
 		// handle the hashing
 		http.HandleFunc("/hash", handlerHash)
+		http.HandleFunc("/stats", handlerStats)
 		// don't want the server to block, as we need to check for shutdown signals
 		go func() {
 			if err := svr.ListenAndServe(); err != http.ErrServerClosed {

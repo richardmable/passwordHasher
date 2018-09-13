@@ -9,11 +9,10 @@ import (
 )
 
 func handlerHash(w http.ResponseWriter, r *http.Request) {
-	// handle all request methods
-	switch r.Method {
-	case http.MethodGet:
-		http.Error(w, "GET request method not allowed.", 405)
-	case http.MethodPost:
+	// check for POST method
+	if r.Method != "POST" {
+		http.Error(w, "method not allowed.", 405)
+	} else {
 		user := &User{}
 		// tell client to expect JSON on return
 		w.Header().Set("Content-Type", "application/json")
@@ -37,12 +36,10 @@ func handlerHash(w http.ResponseWriter, r *http.Request) {
 		// write JSON response
 		w.Write(userJson)
 		fmt.Println("Request processed")
-	case http.MethodPut:
-		http.Error(w, "PUT request method not allowed.", 405)
-	case http.MethodDelete:
-		http.Error(w, "DELETE request method not allowed.", 405)
-	default:
-		http.Error(w, "Invalid request method.", 405)
 	}
+
+}
+
+func handlerStats(w http.ResponseWriter, r *http.Request) {
 
 }

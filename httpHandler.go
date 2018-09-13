@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"net/http"
 	"strings"
 	"time"
@@ -18,7 +19,11 @@ func handlerHash(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Println("Request received...processing...")
 		// arbitrary 5 second delay
-		time.Sleep(5 * time.Second)
+		// generate a random seed to the sequence differs on each start
+		s1 := rand.NewSource(time.Now().UnixNano())
+		r1 := rand.New(s1)
+		timeDelay := r1.Intn(7)
+		time.Sleep(time.Duration(timeDelay) * time.Second)
 		r.ParseForm()
 		for k, v := range r.Form {
 			// convert to string
@@ -41,5 +46,15 @@ func handlerHash(w http.ResponseWriter, r *http.Request) {
 }
 
 func handlerStats(w http.ResponseWriter, r *http.Request) {
-
+	if r.Method != "GET" {
+		http.Error(w, "method not allowed.", 405)
+	} else {
+		stats := &Stats{}
+		fmt.Println("Statistics requested...")
+		statsJson, err := json.Marshal(stats)
+		checkError(err)
+		w.WriteHeader(http.StatusOK)
+		w.Write(statsJson)
+		fmt.Println("Statistics delivered!")
+	}
 }

@@ -24,7 +24,6 @@ func handlerHash(w http.ResponseWriter, r *http.Request) {
 		for k, v := range r.Form {
 			// convert to string
 			vString := strings.Join(v, "")
-			fmt.Println(vString)
 			// ensure we are not hashing other possible form values
 			if k == "password" {
 				user.HashPwd = hashPassword([]byte(vString))

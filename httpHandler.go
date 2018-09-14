@@ -9,7 +9,11 @@ import (
 	"time"
 )
 
+var stats = &Stats{}
+
 func handlerHash(w http.ResponseWriter, r *http.Request) {
+	// run stats generator each time method is called
+	defer statsGenerator(time.Now(), stats)
 	// check for POST method
 	if r.Method != "POST" {
 		http.Error(w, "method not allowed.", 405)
@@ -49,7 +53,6 @@ func handlerStats(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
 		http.Error(w, "method not allowed.", 405)
 	} else {
-		stats := &Stats{}
 		fmt.Println("Statistics requested...")
 		statsJson, err := json.Marshal(stats)
 		checkError(err)

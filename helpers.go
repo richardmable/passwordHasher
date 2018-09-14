@@ -17,7 +17,6 @@ func checkError(err error) {
 // time how long a function takes
 func timeToProcess(start time.Time, stats *Stats) time.Duration {
 	elapsed := time.Since(start)
-	fmt.Printf("took %s\n", elapsed)
 	return elapsed
 }
 

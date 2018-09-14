@@ -13,7 +13,7 @@
     * Best to see here: [Golang Install](https://golang.org/doc/install)
 2. After that is setup, download or clone repo into proper directory within your Go code folder.
 3. Start the program by entering `go run *.go` which will compile, build, and run the program.
-4. From here are presented with 3 options:
+4. From here you are presented with 3 options:
     * 1 is to run the program as a simple command line interface
     * 2 is to run the program as a simple server on port 8080 that accepts a `password` as a form field to `/hash` and returns the hash over HTTP
     * 3 is the same as 2, but supports graceful shutdown and a `/stats` endpoint

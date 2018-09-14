@@ -15,7 +15,7 @@
 3. Start the program by entering `go run *.go` which will compile, build, and run the program.
 4. From here are presented with 3 options:
     * 1 is to run the program as a simple command line interface
-    * 2 is to run the program as a simple server that accepts a `password` as a form field to /hash and returns the hash over HTTP
-    * 3 is the same as 2, but supports graceful shutdown and a /stats endpoint
+    * 2 is to run the program as a simple server on port 8080 that accepts a `password` as a form field to `/hash` and returns the hash over HTTP
+    * 3 is the same as 2, but supports graceful shutdown and a `/stats` endpoint
 5. Go forth and enjoy
 

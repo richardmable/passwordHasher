@@ -10,21 +10,29 @@ import (
 func main() {
 	fmt.Println("Program started...")
 	var programOption int64
-	fmt.Println("Select a program option by entering a number:\n 1: Command line input to return SHA512 Base64 encoded hash\n 2: Hash and encode passwords over HTTP\n 3: Same as 2, but with the ability to send a GET request to /shutdown to shutdown the server once work is completed, and a /stats endpoint")
+	fmt.Println(
+		`Select a program option by entering a number:
+        1: Command line input to return SHA512 Base64 encoded hash
+        2: Hash and encode passwords over HTTP 
+        3: Same as 2, but with the ability to send 
+        a GET request to /shutdown to shutdown 
+        the server once work is completed, and a /stats endpoint`)
 	_, err := fmt.Scan(&programOption)
 	checkError(err)
-	// command line mode to take a user inputted string and return a base64 SHA512 encoded string
+	// command line mode to take a user inputted
+	// string and return a base64 SHA512 encoded string
 	if programOption == 1 {
 		fmt.Println("Program 1, command line input started")
-		// infinite loop to take inifinite entries, don't have to restart each time
+		// infinite loop to take infinite entries, don't have to restart each time
 		for {
 			pwd := hashPassword(passwordCLineEntry())
 			fmt.Println("Your base64 encoded password:")
 			fmt.Println(pwd)
 		}
-		// ideally would set the port in the .env or similiar
+		// ideally would set the port in the .env or similar
 	} else if programOption == 2 {
-		// does the same as program 1, but over http, and can handle multiple connections
+		// does the same as program 1, but over http,
+		// and can handle multiple connections
 		fmt.Println("Program 2, http mode started")
 		// set some timeouts
 		s := &http.Server{
@@ -38,7 +46,9 @@ func main() {
 		log.Fatal(s.ListenAndServe())
 
 	} else if programOption == 3 {
-		// does the same as program 2 but provides a /shutdown endpoint to shutdown gracefully, and provides a /stats endpoint
+		// does the same as program 2 but provides a
+		// /shutdown endpoint to shutdown gracefully
+		// and provides a /stats endpoint
 		fmt.Println("Program 3, http mode started w/shutdown and stats enabled")
 		// set some timeouts
 		svr := &http.Server{

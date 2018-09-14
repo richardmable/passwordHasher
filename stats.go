@@ -5,7 +5,7 @@ import (
 )
 
 type Stats struct {
-	TotalRequests       int64         `json:"totalRequests"`
-	AverageProccessTime int64         `json:"averageProccessTime"`
-	TotalProccessTime   time.Duration `json:"totalProcessTime"`
+	TotalRequests       int64         `json:"total"`
+	AverageProccessTime int64         `json:"average"`
+	TotalProccessTime   time.Duration `json:"-"`
 }
